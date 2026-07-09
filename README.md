@@ -24,7 +24,10 @@ The project aims to:
 - Mathematics students taking introductory logic and set theory
 
 ### BRIEF DESCRIPTION:
-To be added
+The Discrete Math Translator is a Java-based program designed to translate standard English sentence structures into their discrete mathematics equivalents. The application is designed to accept English input (derived from a set of sentence structures) and recognize common logical structures, including conjunctions, disjunctions, implications, and negations.
+
+After the translation, the program displays mathematical notation along with an explanation of which logical rules were found and how they are present in the given sentence. If the program fails to find any notation in the given sentence, the application will handle the exception and inform the user which kind of input is accepted by the program. 
+
 
 ### CORE OOP CONCEPTS
 - Encapsulation: <where/how>
