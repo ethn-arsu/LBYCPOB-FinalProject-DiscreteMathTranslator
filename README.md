@@ -30,10 +30,17 @@ After the translation, the program displays mathematical notation along with an 
 The program uses a rule-based approach and supports predefined sentence structures commonly used in introductory Discrete Mathematics. As such, the program is not intended for translating unrestricted natural language.
 
 ### CORE OOP CONCEPTS
-- Encapsulation: The logic components/ translation rules will contain their own internal data and logic. Program objects contain private fields and public methods, allowing controlled access through said methods.
-- Inheritance: Different translation rules inherit the methods from a shared parent class.
-- Polymorphism: Individual translation implementation between objects is done via overriding the shared methods present, given a parent class. The program will select an appropriate rule at runtime based on user input.
-- Abstraction: TranslationRule abstract parent class has methods that define shared behaviors that every translation rule must implement. The main will interact with these rules through the abstract without needing to know the individual implementation of the objects.
+- Encapsulation:
+  Each translation rule contains its own internal fields and translation logic. Classes use private fields and public methods to ensure that data is accessed and can only be modified through controlled methods.
+
+- Inheritance: 
+  Different translation rule classes inherit methods from a common TranslationRule abstract class, allowing them to share common behaviors while implementing their own logic without the need to rewrite methods for each translation rule.
+  
+- Polymorphism:
+  Each translation rule overrides shared methods defined in the parent class. At runtime, the program will determine the appropriate translation rule based on the user's input and executes the corresponding implementation without needing to know the specific translation being used. 
+  
+- Abstraction:
+  The TranslationRule abstract class defines common behaviors that ecvery translation rule must implement without specifying how they are performed. The main translator interacts with these rules through the abstract class, allowing it to use the different translation rules without depending on their individual implementations.
 
 ### INITIAL CLASS IDEAS
 - TranslationRule: Abstract class that serves as the blueprint for all translation rules.
