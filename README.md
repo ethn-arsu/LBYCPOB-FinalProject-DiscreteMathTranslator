@@ -24,7 +24,7 @@ The project aims to:
 - Mathematics students taking introductory logic and set theory
 
 ### BRIEF DESCRIPTION:
-<Summary of purpose and basic functionality>
+To be added
 
 ### CORE OOP CONCEPTS
 - Encapsulation: <where/how>
