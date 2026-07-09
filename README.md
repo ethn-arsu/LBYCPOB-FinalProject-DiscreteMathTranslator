@@ -30,10 +30,14 @@ After the translation, the program displays mathematical notation along with an 
 
 
 ### CORE OOP CONCEPTS
-- Encapsulation: <where/how>
-- Inheritance: <where/how>
-- Polymorphism: <where/how>
-- Abstraction: <where/how>
+- Encapsulation: 
+-	The logic components/ translation rules will contain their own internal data and logic. Program objects contain   private fields and public methods, allowing controlled access through said methods.
+- Inheritance:
+- Different translation rules inherit the methods from a shared parent class.
+- Polymorphism: 
+-	Individual translation implementation between objects is done via overriding the shared methods present, given a parent class. The program will select an appropriate rule at runtime based on user input.
+- Abstraction: 
+-	TranslationRule abstract parent class has methods that define shared behaviors that every translation rule must implement. The main will interact with these rules through the abstract without needing to know the individual implementation of the objects.
 
 ### INITIAL CLASS IDEAS:
 - ClassName1: <responsibility>
