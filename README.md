@@ -40,15 +40,15 @@ After the translation, the program displays mathematical notation along with an 
 -	TranslationRule abstract parent class has methods that define shared behaviors that every translation rule must implement. The main will interact with these rules through the abstract without needing to know the individual implementation of the objects.
 
 ### INITIAL CLASS IDEAS:
-- ClassName1: <responsibility>
-- ClassName2: <responsibility>
-- ClassName3: <responsibility>
+- TranslationRule: Abstract class that serves as the blueprint for all translation rules
+- ConditionalRule, ConjunctionRule, NegationRule: Concrete classes that implement their specific logic for translation
+- TranslatorEngine: Controller class that orchestrates the translation's workflow
 
 ### USER STORIES (Recommended):
-- As a <user type>, I want to <action> so that <goal>.
-- As a <user type>, I want to <action> so that <goal>.
+- As an engineering student, I want to input an implication statement so that I can instantly see its formal notation.
+- As a struggling discrete math student, I want to see a breakdown of the translation process so that I may learn and improve my discrete math skills.
 
 ### CORE FEATURES (Recommended):
-- <Feature 1>
-- <Feature 2>
-- <Feature 3>
+- Pattern Matching & Translation
+- Legend & Variable Assignment
+- Step-by-step Breakdown
