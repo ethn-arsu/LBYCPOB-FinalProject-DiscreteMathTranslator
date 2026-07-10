@@ -3,7 +3,7 @@
 ### TEAM MEMBERS
 Ethan Edgar C. Arsua - ethn-arsu
 
-Aeon Alphonse E. Mauricio - foobar-trashdump
+Aeon Alphonse E. Mauricio - aeons-spaghetti
 
 Zamuel Paolo L. Robes - zamuelrobes-cmd
 
@@ -31,26 +31,37 @@ The program uses a rule-based approach and supports predefined sentence structur
 
 ### CORE OOP CONCEPTS
 - Encapsulation:
-  Each translation rule contains its own internal fields and translation logic. Classes use private fields and public methods to ensure that data is accessed and can only be modified through controlled methods.
+  - Each translation rule contains its own internal fields and translation logic. 
+  - Classes use private fields and public methods to ensure that data is accessed and can only be modified through controlled methods.
 
 - Inheritance: 
-  Different translation rule classes inherit methods from a common TranslationRule abstract class, allowing them to share common behaviors while implementing their own logic without the need to rewrite methods for each translation rule.
+  - Different translation rule classes inherit methods from a common TranslationRule abstract class, allowing them to share common behaviors while implementing their own logic without the need to rewrite methods for each translation rule.
   
 - Polymorphism:
-  Each translation rule overrides shared methods defined in the parent class. At runtime, the program will determine the appropriate translation rule based on the user's input and executes the corresponding implementation without needing to know the specific translation being used. 
+  - Each translation rule overrides shared methods defined in the parent class. 
+  - At runtime, the program will determine the appropriate translation rule based on the user's input and executes the corresponding implementation without needing to know the specific translation being used. 
   
 - Abstraction:
-  The TranslationRule abstract class defines common behaviors that every translation rule must implement without specifying how they are performed. The main translator interacts with these rules through the abstract class, allowing it to use the different translation rules without depending on their individual implementations.
+  - The TranslationRule abstract class defines common behaviors that every translation rule must implement without specifying how they are performed. 
+  - The main translator interacts with these rules through the abstract class, allowing it to use the different translation rules without depending on their individual implementations.
 
 ### INITIAL CLASS IDEAS
-- TranslationRule: Abstract class that serves as the blueprint for all translation rules.
-- ConditionalRule: Implements translation for implication statements.
-- ConjunctionRule: Implements translation for conjunction statements.
-- NegationRule: Implements translation for negation statements.
-- TranslatorEngine: Coordinates the translation process by selecting the appropriate rule based on user input.
-- Expression: Stores the original English statement, mathematical notation, and generated explanation.
-- TranslationResult: Stores the final notation, assigned variables, detected rule, and explanation before displaying it to the user.
-- UserInterface: Handles user interaction via JavaFX.
+- TranslationRule: 
+  - Abstract class that serves as the blueprint for all translation rules.
+- ConditionalRule: 
+  - Implements translation for implication statements.
+- ConjunctionRule: 
+  - Implements translation for conjunction statements.
+- NegationRule: 
+  - Implements translation for negation statements.
+- TranslatorEngine: 
+  - Coordinates the translation process by selecting the appropriate rule based on user input.
+- Expression: 
+  - Stores the original English statement, mathematical notation, and generated explanation.
+- TranslationResult: 
+  - Stores the final notation, assigned variables, detected rule, and explanation before displaying it to the user.
+- UserInterface: 
+  - Handles user interaction via JavaFX.
 
 ### USER STORIES
 - As an engineering student, I want to input an implication statement so that I can instantly see its formal notation.
@@ -58,13 +69,16 @@ The program uses a rule-based approach and supports predefined sentence structur
 - As a computer science student, I want to know when my input is unsupported so I can rewrite it correctly.
 
 ### CORE FEATURES:
-- Rule-based pattern matching to recognize supported English sentence structures.
-- Translation of English statements into discrete mathematics notation.
-- Automatic variable assignment (e.g., P, Q, R) for identified propositions.
-- Legend generation that maps variables to their corresponding English statement.
-- Step-by-step explanation of how the translation is performed.
-- Program feedback for unsupported or invalid inputs.
-- 'Supported Formats' reference page containing examples of accepted sentence patterns.
+- Pattern Matching & Translation:
+    - Rule-based pattern matching to recognize supported English sentence structures.
+    - Translation of English statements into discrete mathematics notation.
+- Legend & Variable Assignment:
+    - Legend generation that maps variables to their corresponding English statements.
+    - Automatic variable assignment (e.g., P, Q, R) for identified propositions.
+- Step-by-step Breakdown:
+    - Step-by-step explanation of how the translation was performed.
+    - User-friendly feedback for unsupported or invalid sentence structures.
+    - "Supported Formats" reference page containing examples of accepted sentence patterns.
   
 ### SAMPLE IMAGES:
 - Main Menu:
