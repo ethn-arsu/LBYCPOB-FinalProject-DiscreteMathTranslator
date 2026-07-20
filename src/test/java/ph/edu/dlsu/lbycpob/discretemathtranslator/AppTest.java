@@ -1,4 +1,4 @@
-package ph.edu.dlsu.lbycpob;
+package ph.edu.dlsu.lbycpob.discretemathtranslator;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

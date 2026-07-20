@@ -1,4 +1,4 @@
-package ph.edu.dlsu.lbycpob;
+package ph.edu.dlsu.lbycpob.discretemathtranslator;
 
 /**
  * Hello world!
