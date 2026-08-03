@@ -4,19 +4,18 @@ import ph.edu.dlsu.lbycpob.discretemathtranslator.model.Expression;
 import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
 
 /**
- * Handles conditional (implication) statements.
+ * Handles conjunction statements.
  *
  * <p>Example:
- * "If P, then Q"</p>
+ * "P and Q"</p>
  */
-public class ConditionalRule extends TranslationRule {
+public class ConjunctionRule extends TranslationRule {
 
     @Override
     public boolean matches(Expression expression) {
 
         // TODO:
-        // Determine whether the expression
-        // represents a conditional statement.
+        // Detect conjunction statements.
 
         return false;
     }
@@ -25,7 +24,7 @@ public class ConditionalRule extends TranslationRule {
     public TranslationResult translate(Expression expression) {
 
         // TODO:
-        // Translate conditional statement.
+        // Translate conjunction statement.
 
         return null;
     }
