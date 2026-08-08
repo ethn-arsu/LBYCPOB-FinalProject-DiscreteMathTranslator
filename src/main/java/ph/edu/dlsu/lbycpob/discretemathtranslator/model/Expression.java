@@ -29,7 +29,31 @@ public class Expression {
         this.englishStatement = englishStatement;
     }
 
-    // TODO:
-    // Add getters and setters if needed.
+    /**
+     * Gets the English statement entered by the user.
+     *
+     * @return the English statement
+     */
+    public String getEnglishStatement() {
+        return englishStatement;
+    }
 
+    /**
+     * Sets the English statement entered by the user.
+     *
+     * @param englishStatement the user's input
+     */
+    public void setEnglishStatement(String englishStatement) {
+        this.englishStatement = englishStatement;
+    }
+
+    /**
+     * Returns a string representation of this Expression.
+     *
+     * @return the English statement
+     */
+    @Override
+    public String toString() {
+        return englishStatement;
+    }
 }
