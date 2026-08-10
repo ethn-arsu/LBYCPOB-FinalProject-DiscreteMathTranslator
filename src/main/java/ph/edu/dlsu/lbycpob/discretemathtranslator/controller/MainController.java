@@ -1,32 +1,40 @@
 package ph.edu.dlsu.lbycpob.discretemathtranslator.controller;
 
+import ph.edu.dlsu.lbycpob.discretemathtranslator.engine.TranslatorEngine;
+import ph.edu.dlsu.lbycpob.discretemathtranslator.model.Expression;
+import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
+
 /**
- * Controls the main JavaFX interface of the Discrete Math Translator.
+ * Acts as the bridge between the JavaFX view and the
+ * translation engine.
  *
- * <p>This class serves as the bridge between the graphical user interface
- * and the translation engine. It is responsible for handling user actions,
- * updating the interface, and displaying translation results.</p>
+ * <p>The view (FXML controller) calls {@link #handleTranslation(String)}
+ * whenever the user submits an English statement, and receives
+ * a {@link TranslationResult} to display.</p>
  */
 public class MainController {
 
     /**
-     * Initializes the controller after the GUI is loaded.
+     * The engine responsible for performing the actual translation.
      */
-    public void initialize() {
-        // TODO: Initialize GUI components.
+    private final TranslatorEngine translatorEngine;
+
+    /**
+     * Initializes the controller with a new TranslatorEngine instance.
+     */
+    public MainController() {
+        this.translatorEngine = new TranslatorEngine();
     }
 
     /**
-     * Handles the Translate button action.
+     * Handles a translation request from the view.
+     *
+     * @param rawInput the raw English statement typed by the user
+     * @return the result of the translation
      */
-    public void onTranslate() {
-        // TODO: Translate the user's input.
+    public TranslationResult handleTranslation(String rawInput) {
+        Expression expression = new Expression(rawInput);
+        return translatorEngine.translate(expression);
     }
 
-    /**
-     * Handles the Clear button action.
-     */
-    public void onClear() {
-        // TODO: Clear all input and output fields.
-    }
 }
