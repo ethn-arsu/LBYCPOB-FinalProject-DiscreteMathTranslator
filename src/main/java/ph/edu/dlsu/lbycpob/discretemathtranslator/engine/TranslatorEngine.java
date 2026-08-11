@@ -12,6 +12,7 @@ import ph.edu.dlsu.lbycpob.discretemathtranslator.rules.TranslationRule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Coordinates the translation process.
@@ -52,10 +53,12 @@ public class TranslatorEngine {
         for (TranslationRule rule : rules) {
             if (rule.matches(expression)) {
                 String notation = rule.translate(expression);
+                Map<String, String> legend = rule.extractLegend(expression);
                 String explanation = rule.explain(expression);
 
                 TranslationResult result = new TranslationResult();
                 result.setTranslatedNotation(notation);
+                result.setVariableLegend(legend);
                 result.setExplanation(explanation);
 
                 return result;
