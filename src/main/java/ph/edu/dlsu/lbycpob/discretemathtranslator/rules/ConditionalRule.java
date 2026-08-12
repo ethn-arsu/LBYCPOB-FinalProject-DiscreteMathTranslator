@@ -41,6 +41,7 @@ public class ConditionalRule extends TranslationRule {
      * @param expression the English statement to translate
      * @return the resulting translation
      */
+
     @Override
     public TranslationResult translate(Expression expression) {
         TranslationResult result = new TranslationResult();
