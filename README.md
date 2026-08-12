@@ -1,4 +1,4 @@
-# Discrete Math Translator - A Rule-Based English-to-Discrete Mathematics Notation Translator
+# Discrete Math Translator: A Rule-Based English-to-Discrete Mathematics Notation Translator
 
 ### TEAM MEMBERS
 Ethan Edgar C. Arsua - ethn-arsu
