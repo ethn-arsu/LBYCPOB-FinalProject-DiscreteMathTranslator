@@ -2,6 +2,7 @@ package ph.edu.dlsu.lbycpob.discretemathtranslator.engine;
 
 import ph.edu.dlsu.lbycpob.discretemathtranslator.model.Expression;
 import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
+import ph.edu.dlsu.lbycpob.discretemathtranslator.rules.BiconditionalRule;
 import ph.edu.dlsu.lbycpob.discretemathtranslator.rules.ConditionalRule;
 import ph.edu.dlsu.lbycpob.discretemathtranslator.rules.ConjunctionRule;
 import ph.edu.dlsu.lbycpob.discretemathtranslator.rules.DisjunctionRule;
@@ -33,6 +34,7 @@ public class TranslatorEngine {
      */
     public TranslatorEngine() {
         this.rules = new ArrayList<>();
+        rules.add(new BiconditionalRule());
         rules.add(new ConditionalRule());
         rules.add(new ConjunctionRule());
         rules.add(new DisjunctionRule());
