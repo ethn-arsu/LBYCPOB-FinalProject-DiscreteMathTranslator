@@ -4,10 +4,18 @@ import ph.edu.dlsu.lbycpob.discretemathtranslator.model.Expression;
 import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
 
 /**
- * Handles conditional (implication) statements.
+ * Handles conditional statements and translates them into
+ * propositional logic implication notation.
  *
- * <p>Example:
- * "If P, then Q"</p>
+ * <p>Supported patterns include:
+ * <ul>
+ *     <li>If P, then Q</li>
+ *     <li>If P then Q</li>
+ *     <li>Q if P</li>
+ *     <li>Q whenever P</li>
+ *     <li>Q once P</li>
+ * </ul>
+ *
  */
 public class ConditionalRule extends TranslationRule {
 
