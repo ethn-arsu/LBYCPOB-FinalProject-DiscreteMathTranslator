@@ -14,14 +14,39 @@ public class PatternMatcher {
      * Checks whether the input contains a conditional pattern.
      *
      * @param input the user's input
+     * @return true if a biconditional pattern is detected
+     */
+    public boolean containsBiconditional(String input) {
+
+        if (input == null) {
+            return false;
+        }
+        String normal = input.toLowerCase();
+
+        return normal.contains(" if and only if ");
+    }
+
+    /**
+     * Checks whether the input contains a conditional pattern.
+     *
+     * @param input the user's input
      * @return true if a conditional pattern is detected
      */
     public boolean containsConditional(String input) {
 
-        // TODO:
-        // Detect conditional keywords.
+        if (input == null) {
+            return false;
+        }
+        String normal = input.toLowerCase();
 
-        return false;
+        // Biconditional, handled by containsBiconditional
+        if (normal.contains(" if and only if ")){
+            return false;
+        }
+
+        return (normal.startsWith("if ") && normal.contains(" then ")) ||
+                normal.contains(" if ") || normal.contains(" whenever ") ||
+                normal.contains(" once ");
     }
 
     /**
