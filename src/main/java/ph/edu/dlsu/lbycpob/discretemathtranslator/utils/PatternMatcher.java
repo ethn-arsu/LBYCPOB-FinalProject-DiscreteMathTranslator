@@ -73,6 +73,26 @@ public class PatternMatcher {
      * @param input the user's input
      * @return true if a negation pattern is detected
      */
+    public boolean containsDisjunction(String input) {
+
+        if (input == null) {
+            return false;
+        }
+
+        String normal = input.toLowerCase();
+
+        return normal.contains("or") ||
+                (normal.startsWith("either") && normal.contains("or")) ||
+                normal.contains("either") || normal.contains("otherwise");
+
+    }
+
+    /**
+     * Checks whether the input contains a negation pattern.
+     *
+     * @param input the user's input
+     * @return true if a negation pattern is detected
+     */
     public boolean containsNegation(String input) {
 
         if (input == null) {
