@@ -105,4 +105,44 @@ public class PatternMatcher {
                 normal.contains("do not") || normal.contains("never");
 
     }
+
+    /**
+     * Checks whether the input contains a negation pattern.
+     *
+     * @param input the user's input
+     * @return true if a negation pattern is detected
+     */
+    public boolean containsQuantifier(String input) {
+
+        if (input == null) {
+            return false;
+        }
+        String normal = input.toLowerCase();
+
+        return normal.contains("every") ||
+                normal.contains("all") ||
+                normal.contains("some") ||
+                normal.contains("there exists");
+
+    }
+
+    /**
+     * Checks whether the input contains a negation pattern.
+     *
+     * @param input the user's input
+     * @return true if a negation pattern is detected
+     */
+    public boolean containsSet(String input) {
+
+        if (input == null) {
+            return false;
+        }
+        String normal = input.toLowerCase();
+
+        return normal.contains("union") ||
+                normal.contains("intersect") ||
+                normal.contains("subset of") ||
+                normal.contains("element of");
+
+    }
 }
