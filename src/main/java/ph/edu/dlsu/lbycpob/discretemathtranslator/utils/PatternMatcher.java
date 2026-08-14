@@ -83,7 +83,7 @@ public class PatternMatcher {
 
         return normal.contains("or") ||
                 (normal.startsWith("either") && normal.contains("or")) ||
-                normal.contains("either") || normal.contains("otherwise");
+                normal.contains("otherwise");
 
     }
 
