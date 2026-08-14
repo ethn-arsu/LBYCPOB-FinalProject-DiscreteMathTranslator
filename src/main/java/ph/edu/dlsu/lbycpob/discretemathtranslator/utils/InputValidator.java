@@ -15,11 +15,7 @@ public class InputValidator {
      * @return true if the input is valid; false otherwise
      */
     public boolean isValid(String input) {
-
-        // TODO:
-        // Validate the user's input.
-
-        return false;
+        return !isEmpty(input);
     }
 
     /**
@@ -29,10 +25,6 @@ public class InputValidator {
      * @return true if empty; false otherwise
      */
     public boolean isEmpty(String input) {
-
-        // TODO:
-        // Check whether the input is empty.
-
-        return false;
+        return input == null || input.trim().isEmpty();
     }
 }
