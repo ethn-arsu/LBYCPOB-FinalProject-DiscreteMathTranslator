@@ -57,10 +57,14 @@ public class PatternMatcher {
      */
     public boolean containsConjunction(String input) {
 
-        // TODO:
-        // Detect conjunction keywords.
+        if (input == null) {
+            return false;
+        }
+        String normal = input.toLowerCase();
 
-        return false;
+        return normal.contains(" and ") ||
+                normal.contains("as well as") ||
+                normal.contains("but");
     }
 
     /**
@@ -71,9 +75,14 @@ public class PatternMatcher {
      */
     public boolean containsNegation(String input) {
 
-        // TODO:
-        // Detect negation keywords.
+        if (input == null) {
+            return false;
+        }
+        String normal = input.toLowerCase();
 
-        return false;
+        return normal.contains("not") || normal.contains("is not") ||
+                normal.contains("are not") || normal.contains("does not") ||
+                normal.contains("do not") || normal.contains("never");
+
     }
 }
