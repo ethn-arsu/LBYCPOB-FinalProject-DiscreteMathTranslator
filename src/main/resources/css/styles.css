@@ -99,3 +99,43 @@
     -fx-border-width: 2px;
 }
 
+
+/* =========================================================
+   TEXT AREA
+   ========================================================= */
+
+.text-area {
+    -fx-background-color: white;
+    -fx-text-fill: #1f2937;
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1px;
+}
+
+.text-area:hover {
+    -fx-border-color: #9ca3af;
+}
+
+.text-area:focused {
+    -fx-border-color: #4057a8;
+    -fx-border-width: 2px;
+}
+
+.text-area .content {
+    -fx-background-color: white;
+    -fx-background-radius: 7px;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+
+
