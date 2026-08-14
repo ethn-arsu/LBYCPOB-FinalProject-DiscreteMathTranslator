@@ -2,26 +2,47 @@
  * Discrete Math Translator
  * JavaFX Stylesheet
  *
- * TODO:
- * Add styling for the application's GUI components.
+ * Main application theme:
+ * - Deep blue / purple
+ * - Clean academic interface
+ * - Rounded components
+ * - Clear input/output separation
  */
 
-.root {
+/* =========================================================
+   ROOT APPLICATION
+   ========================================================= */
 
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #f4f6fb;
+    -fx-font-size: 14px;
 }
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
 
 .label {
-
+    -fx-text-fill: #1f2937;
 }
 
-.button {
-
+.title-label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #243b6b;
 }
 
-.text-field {
-
+.subtitle-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6b7280;
 }
 
-.text-area {
-
+.section-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #243b6b;
 }
+
+
