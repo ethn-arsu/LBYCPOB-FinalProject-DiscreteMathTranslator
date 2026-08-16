@@ -94,6 +94,20 @@ public class MainController {
             statusLabel.getStyleClass().add("error-label");
         }
     }
+
+    /**
+     * Handles the clear button, clears all input and results
+     *
+     * @param event the JavaFX action event
+     */
+    @FXML
+    private void handleClear(ActionEvent event) {
+        inputField.clear();
+        translationLabel.clear();
+        explanationLabel.clear();
+        statusLabel.setText("");
+    }
+
     /**
      * Handles a translation request from the view.
      *
