@@ -64,32 +64,33 @@
                            text=""
                            wrapText="true"/>
                 </VBox>
+                <!--Results Display-->
+                <VBox spacing="8">
+                    <Label text="Translation"
+                           styleClass="section-label"/>
+                    <Label fx:id="notationLabel"
+                           text="Translation will appear here"
+                           wrapText="true"
+                           styleClass="notation-label"/>
+                </VBox>
+
+                <!--Explanation-->
+                <VBox spacing="8">
+                    <Label text="Explanation"
+                           styleClass="section-label"/>
+                    <TextArea fx:id="explanationLabel"
+                              editable="false"
+                              wrapText="true"
+                              prefRowCount="5"
+                              promptText="An explanation of the translation appears here"
+                              styleClass="explanation-area"/>
+
+                </VBox>
             </VBox>
         </ScrollPane>
     </center>
 
 
 
-    <!--Results Display-->
-    <VBox spacing="8">
-        <Label text="Translation"
-               styleClass="section-label"/>
-        <Label fx:id="notationLabel"
-               text="Translation will appear here"
-               wrapText="true"
-               styleClass="notation-label"/>
-    </VBox>
 
-    <!--Explanation-->
-    <VBox spacing="8">
-        <Label text="Explanation"
-               styleClass="section-label"/>
-        <TextArea fx:id="explanationLabel"
-                  editable="false"
-                  wrapText="true"
-                  prefRowCount="5"
-                  promptText="An explanation of the translation appears here"
-                  styleClass="explanation-area"/>
-
-    </VBox>
 </BorderPane>
