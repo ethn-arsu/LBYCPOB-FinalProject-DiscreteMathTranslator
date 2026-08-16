@@ -14,7 +14,7 @@
    ========================================================= */
 
 .root {
-    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-family: "Segoe UI Variable", Segoe UI, sans-serif;
     -fx-background-color: #f4f6fb;
     -fx-font-size: 14px;
 }
@@ -135,20 +135,6 @@
 
 .text-area .scroll-pane .viewport {
     -fx-background-color: transparent;
-}
-
-
-/* =========================================================
-   OUTPUT / RESULT AREAS
-   ========================================================= */
-
-.result-area {
-    -fx-background-color: #eef2ff;
-    -fx-border-color: #c7d2fe;
-}
-
-.result-area .content {
-    -fx-background-color: #eef2ff;
 }
 
 
