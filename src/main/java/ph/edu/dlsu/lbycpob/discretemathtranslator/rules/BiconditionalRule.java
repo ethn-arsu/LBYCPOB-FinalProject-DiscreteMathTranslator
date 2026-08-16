@@ -27,15 +27,30 @@ public class BiconditionalRule extends TranslationRule {
 
     @Override
     public boolean matches(Expression expression) {
-        if (expression == null || expression.getEnglishStatement() == null) {
+        if (expression == null
+                || expression.getEnglishStatement() == null) {
             return false;
         }
 
-        String input = expression.getEnglishStatement()
-                .trim()
-                .toLowerCase();
+        String input = expression.getEnglishStatement().trim();
+        String lowerInput = input.toLowerCase();
 
-        return input.contains(" if and only if ");
+        String connector = " if and only if ";
+        int connectorIndex = lowerInput.indexOf(connector);
+
+        if (connectorIndex == -1) {
+            return false;
+        }
+
+        String leftSide = input.substring(0, connectorIndex).trim();
+        String rightSide = input.substring(
+                connectorIndex + connector.length()
+        ).trim();
+
+        leftSide = removeTrailingPunctuation(leftSide);
+        rightSide = removeTrailingPunctuation(rightSide);
+
+        return !leftSide.isEmpty() && !rightSide.isEmpty();
     }
 
     /**

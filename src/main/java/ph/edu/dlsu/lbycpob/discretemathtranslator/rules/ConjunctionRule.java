@@ -38,6 +38,13 @@ public class ConjunctionRule extends TranslationRule {
                 .trim()
                 .toLowerCase();
 
+        // "and" is part of the biconditional phrase
+        // "if and only if", so it must not be treated
+        // as a conjunction.
+        if (input.contains("if and only if")) {
+            return false;
+        }
+
         return input.contains(" and ");
     }
 
