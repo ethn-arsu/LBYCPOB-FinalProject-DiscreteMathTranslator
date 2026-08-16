@@ -57,6 +57,44 @@ public class MainController {
     }
 
     /**
+     * Handles the translation button and an Enter key pressed within input field
+     *
+     * @param event the JavaFX action event
+     */
+    @FXML
+    private void handleTranslation(ActionEvent event) {
+
+        String rawInput = inputField.getText();
+
+        //Input Validation
+        if (rawInput == null || rawInput.trim().isEmpty()) {
+            statusLabel.setText("Please enter a valid input");
+            statusLabel.getStyleClass().add("error-label");
+
+            translationLabel.setText("");
+            explanationLabel.setText("");
+            return;
+        }
+
+        Expression expression = new Expression(rawInput);
+
+        TranslationResult translationResult = translatorEngine.translate(expression);
+
+        if(translationResult.isSuccessful()){
+            translationLabel.setText(translationResult.getTranslatedNotation());
+            explanationLabel.setText(translationResult.getExplanation());
+
+            statusLabel.setText("Successfully translated");
+            statusLabel.getStyleClass().add("success-label");
+        }
+        else {
+            translationLabel.setText("Cannot translate the given expression");
+            explanationLabel.setText(translationResult.getExplanation());
+            statusLabel.setText("Failed translating");
+            statusLabel.getStyleClass().add("error-label");
+        }
+    }
+    /**
      * Handles a translation request from the view.
      *
      * @param rawInput the raw English statement typed by the user
