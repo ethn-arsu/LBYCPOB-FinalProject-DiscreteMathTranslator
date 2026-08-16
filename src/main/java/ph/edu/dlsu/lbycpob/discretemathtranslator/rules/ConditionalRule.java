@@ -7,31 +7,40 @@ import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
  * Handles conditional statements and translates them into
  * propositional logic implication notation.
  *
+ * <p>A conditional statement expresses that one proposition
+ * implies another and is represented by the symbol →.</p>
+ *
  * <p>Supported patterns include:
  * <ul>
  *     <li>If P, then Q</li>
- *     <li>If P then Q</li>
- *     <li>Q if P</li>
- *     <li>Q whenever P</li>
- *     <li>Q once P</li>
+ *     <li>If P, Q</li>
+ *     <li>P implies Q</li>
  * </ul>
+ *
+ * <p>Example:
+ * "If Alice studies, then Alice passes the exam."
+ * becomes:
+ * p → q</p>
  *
  */
 public class ConditionalRule extends TranslationRule {
 
     @Override
     public boolean matches(Expression expression) {
-        if (expression == null || expression.getEnglishStatement() == null) {
-        return false;
-    }
+        if (expression == null
+                || expression.getEnglishStatement() == null) {
+            return false;
+        }
 
-        String input = expression.getEnglishStatement().trim().toLowerCase();
+        String input = expression.getEnglishStatement()
+                .trim()
+                .toLowerCase();
 
-        return input.startsWith("if ")
+        return input.startsWith("if ") // To prevent this from accidentally claiming a biconditional statement
                 && input.contains(" then ")
-                || input.contains(" if ")
-                || input.contains(" whenever ")
-                || input.contains(" once ");
+                || input.startsWith("if ")
+                && input.contains(",")
+                || input.contains(" implies ");
     }
 
     /**
@@ -46,56 +55,77 @@ public class ConditionalRule extends TranslationRule {
     public TranslationResult translate(Expression expression) {
         TranslationResult result = new TranslationResult();
 
+        if (!matches(expression)) {
+            return result;
+        }
+
         String input = expression.getEnglishStatement().trim();
-
-        String antecedent;
-        String consequent;
-
         String lowerInput = input.toLowerCase();
 
-        if (lowerInput.startsWith("if ") && lowerInput.contains(" then ")) {
+        String leftSide;
+        String rightSide;
+
+        if (lowerInput.startsWith("if ")
+                && lowerInput.contains(" then ")) {
 
             int thenIndex = lowerInput.indexOf(" then ");
 
-            antecedent = input.substring(3, thenIndex).trim();
-            consequent = input.substring(thenIndex + 6).trim();
+            leftSide = input.substring(3, thenIndex).trim();
+            rightSide = input.substring(
+                    thenIndex + 6
+            ).trim();
 
-        } else if (lowerInput.contains(" whenever ")) {
+        } else if (lowerInput.startsWith("if ")
+                && lowerInput.contains(",")) {
 
-            int wheneverIndex = lowerInput.toLowerCase().indexOf(" whenever ");
+            int commaIndex = input.indexOf(",");
 
-            consequent = input.substring(0, wheneverIndex).trim();
-            antecedent = input.substring(wheneverIndex + 10).trim();
-
-        } else if (lowerInput.contains(" once ")) {
-
-            int onceIndex = lowerInput.toLowerCase().indexOf(" once ");
-
-            consequent = input.substring(0, onceIndex).trim();
-            antecedent = input.substring(onceIndex + 6).trim();
-
-        } else if (lowerInput.contains(" if ")) {
-
-            int ifIndex = lowerInput.indexOf(" if ");
-
-            consequent = input.substring(0, ifIndex).trim();
-            antecedent = input.substring(ifIndex + 4).trim();
+            leftSide = input.substring(3, commaIndex).trim();
+            rightSide = input.substring(
+                    commaIndex + 1
+            ).trim();
 
         } else {
+
+            int impliesIndex = lowerInput.indexOf(" implies ");
+
+            if (impliesIndex == -1) {
+                return result;
+            }
+
+            leftSide = input.substring(0, impliesIndex).trim();
+            rightSide = input.substring(
+                    impliesIndex + 9
+            ).trim();
+        }
+
+        leftSide = removeTrailingPunctuation(leftSide);
+        rightSide = removeTrailingPunctuation(rightSide);
+
+        if (leftSide.isEmpty() || rightSide.isEmpty()) {
             return result;
         }
 
         result.setTranslatedNotation("p → q");
 
-        result.addLegendEntry("p", antecedent);
-        result.addLegendEntry("q", consequent);
+        result.addLegendEntry("p", leftSide);
+        result.addLegendEntry("q", rightSide);
 
         result.setExplanation(
                 "The statement expresses a conditional relationship. "
-                        + "\"" + antecedent + "\" is the antecedent, while "
-                        + "\"" + consequent + "\" is the consequent."
+                        + "\"" + leftSide + "\" is the condition, while "
+                        + "\"" + rightSide + "\" is the consequence. "
+                        + "The conditional relationship is represented "
+                        + "by implication (→)."
         );
 
         return result;
+    }
+
+    /**
+     * Removes punctuation from the end of a proposition.
+     */
+    private String removeTrailingPunctuation(String text) {
+        return text.replaceAll("[.,!?]+$", "").trim();
     }
 }
