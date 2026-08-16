@@ -77,9 +77,7 @@ public class MainController {
 
         // Input Validation
         if (rawInput == null || rawInput.trim().isEmpty()) {
-            statusLabel.setText("Please enter a valid input");
-            statusLabel.getStyleClass().add("error-label");
-
+            setStatus("Please enter a valid input", "error-label");
             translationLabel.setText("");
             legendLabel.clear();
             explanationLabel.setText("");
@@ -102,8 +100,7 @@ public class MainController {
                     translationResult.getExplanation()
             );
 
-            statusLabel.setText("Successfully translated");
-            statusLabel.getStyleClass().add("success-label");
+            setStatus("Successfully translated", "success-label");
 
         } else {
             translationLabel.setText(
@@ -117,8 +114,7 @@ public class MainController {
                     translationResult.getExplanation()
             );
 
-            statusLabel.setText("Failed translating");
-            statusLabel.getStyleClass().add("error-label");
+            setStatus("Failed translating", "error-label");
         }
     }
 
@@ -168,7 +164,22 @@ public class MainController {
         translationLabel.clear();
         legendLabel.clear();
         explanationLabel.clear();
+        statusLabel.getStyleClass().removeAll(
+                "error-label",
+                "success-label"
+        );
         statusLabel.setText("");
+    }
+
+    // Fixing the status label
+    private void setStatus(String message, String styleClass) {
+        statusLabel.getStyleClass().removeAll(
+                "error-label",
+                "success-label"
+        );
+
+        statusLabel.setText(message);
+        statusLabel.getStyleClass().add(styleClass);
     }
 
     /**
