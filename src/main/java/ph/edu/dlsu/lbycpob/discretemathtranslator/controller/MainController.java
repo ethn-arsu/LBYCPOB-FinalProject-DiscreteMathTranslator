@@ -28,6 +28,8 @@ public class MainController {
      */
     private final TranslatorEngine translatorEngine;
 
+    private final InputValidator inputValidator;
+
     /**
      * Input field where the English statement is input.
      */
@@ -63,6 +65,7 @@ public class MainController {
      */
     public MainController() {
         this.translatorEngine = new TranslatorEngine();
+        this.inputValidator = new InputValidator();
     }
 
     /**
@@ -76,7 +79,7 @@ public class MainController {
         String rawInput = inputField.getText();
 
         // Input Validation
-        if (rawInput == null || rawInput.trim().isEmpty()) {
+        if (!inputValidator.isValid(rawInput)) {
             setStatus("Please enter a valid input", "error-label");
             translationLabel.setText("");
             legendLabel.clear();
