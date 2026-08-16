@@ -7,12 +7,18 @@ import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
  * Handles basic quantified statements and translates them into
  * predicate logic notation.
  *
- * <p>Supported quantifier patterns include:
+ * <p>Supported patterns include:
  * <ul>
  *     <li>Every [subject] [predicate]</li>
  *     <li>All [subject] [predicate]</li>
  *     <li>Some [subject] [predicate]</li>
  *     <li>There exists a/an [predicate]</li>
+ * </ul>
+ *
+ * <p>Examples:
+ * <ul>
+ *     <li>"Every student studies." → ∀x(Student(x) → Studies(x))</li>
+ *     <li>"There exists a prime number." → ∃x PrimeNumber(x)</li>
  * </ul>
  *
  */
@@ -29,11 +35,14 @@ public class QuantifierRule extends TranslationRule {
 
     @Override
     public boolean matches(Expression expression) {
-        if (expression == null || expression.getEnglishStatement() == null) {
+        if (expression == null
+                || expression.getEnglishStatement() == null) {
             return false;
         }
 
-        String input = expression.getEnglishStatement().trim().toLowerCase();
+        String input = expression.getEnglishStatement()
+                .trim()
+                .toLowerCase();
 
         return input.startsWith("every ")
                 || input.startsWith("all ")
@@ -49,23 +58,37 @@ public class QuantifierRule extends TranslationRule {
      * @return the resulting translation
      */
 
+    // This is very involved due to predicate logic
     @Override
     public TranslationResult translate(Expression expression) {
         TranslationResult result = new TranslationResult();
+
+        if (!matches(expression)) {
+            return result;
+        }
 
         String input = expression.getEnglishStatement().trim();
         String lowerInput = input.toLowerCase();
 
         if (lowerInput.startsWith("every ")) {
-            return translateUniversal(result, input.substring(6).trim());
+            return translateUniversal(
+                    result,
+                    input.substring(6).trim()
+            );
         }
 
         if (lowerInput.startsWith("all ")) {
-            return translateUniversal(result, input.substring(4).trim());
+            return translateUniversal(
+                    result,
+                    input.substring(4).trim()
+            );
         }
 
         if (lowerInput.startsWith("some ")) {
-            return translateExistential(result, input.substring(5).trim());
+            return translateExistential(
+                    result,
+                    input.substring(5).trim()
+            );
         }
 
         if (lowerInput.startsWith("there exists ")) {
@@ -79,34 +102,30 @@ public class QuantifierRule extends TranslationRule {
     }
 
     /**
-     * Handles universal statements such as:
+     * Translates a universal statement such as:
      * "Every student studies."
      */
     private TranslationResult translateUniversal(
             TranslationResult result,
             String statement) {
 
-        String[] parts = statement.split("\\s+", 2);
+        String cleanedStatement = removeTrailingPunctuation(statement);
+
+        String[] parts = cleanedStatement.split("\\s+", 2);
 
         if (parts.length < 2) {
-            result.setTranslatedNotation("∀x P(x)");
-            result.addLegendEntry("P(x)", statement);
-
-            result.setExplanation(
-                    "The statement expresses universal quantification."
-            );
-
             return result;
         }
 
-        String subject = removeTrailingPunctuation(parts[0]);
-        String predicate = removeTrailingPunctuation(parts[1]);
+        String subject = parts[0];
+        String predicate = parts[1];
 
-        String subjectName = capitalize(subject);
-        String predicateName = capitalize(predicate);
+        String subjectName = toPredicateName(subject);
+        String predicateName = toPredicateName(predicate);
 
         result.setTranslatedNotation(
-                "∀x(" + subjectName + "(x) → " + predicateName + "(x))"
+                "∀x(" + subjectName + "(x) → "
+                        + predicateName + "(x))"
         );
 
         result.addLegendEntry(
@@ -120,42 +139,39 @@ public class QuantifierRule extends TranslationRule {
         );
 
         result.setExplanation(
-                "The statement expresses a universal quantification. "
-                        + "It states that every member of the specified "
-                        + "class has the given property."
+                "The statement expresses universal quantification. "
+                        + "It states that every " + subject
+                        + " has the specified property."
         );
 
         return result;
     }
 
     /**
-     * Handles existential statements beginning with "some".
+     * Translates an existential statement such as:
+     * "Some student studies."
      */
     private TranslationResult translateExistential(
             TranslationResult result,
             String statement) {
 
-        String[] parts = statement.split("\\s+", 2);
+        String cleanedStatement = removeTrailingPunctuation(statement);
+
+        String[] parts = cleanedStatement.split("\\s+", 2);
 
         if (parts.length < 2) {
-            result.setTranslatedNotation("∃x P(x)");
-            result.addLegendEntry("P(x)", statement);
-
-            result.setExplanation(
-                    "The statement expresses existential quantification."
-            );
-
             return result;
         }
 
-        String subject = removeTrailingPunctuation(parts[0]);
-        String predicate = removeTrailingPunctuation(parts[1]);
+        String subject = parts[0];
+        String predicate = parts[1];
 
-        String subjectName = capitalize(subject);
-        String predicateName = capitalize(predicate);
+        String subjectName = toPredicateName(subject);
+        String predicateName = toPredicateName(predicate);
 
         result.setTranslatedNotation(
-                "∃x(" + subjectName + "(x) ∧ " + predicateName + "(x))"
+                "∃x(" + subjectName + "(x) ∧ "
+                        + predicateName + "(x))"
         );
 
         result.addLegendEntry(
@@ -170,16 +186,16 @@ public class QuantifierRule extends TranslationRule {
 
         result.setExplanation(
                 "The statement expresses existential quantification. "
-                        + "It states that at least one member of the "
-                        + "specified class has the given property."
+                        + "It states that at least one " + subject
+                        + " has the specified property."
         );
 
         return result;
     }
 
     /**
-     * Handles statements such as:
-     * "There exists a prime number."
+     * Translates a statement beginning with:
+     * "There exists a/an ..."
      */
     private TranslationResult translateThereExists(
             TranslationResult result,
@@ -187,13 +203,13 @@ public class QuantifierRule extends TranslationRule {
 
         String cleaned = removeTrailingPunctuation(statement);
 
-        if (cleaned.startsWith("a ")) {
+        if (cleaned.toLowerCase().startsWith("a ")) {
             cleaned = cleaned.substring(2).trim();
-        } else if (cleaned.startsWith("an ")) {
+        } else if (cleaned.toLowerCase().startsWith("an ")) {
             cleaned = cleaned.substring(3).trim();
         }
 
-        String predicateName = capitalize(cleaned);
+        String predicateName = toPredicateName(cleaned);
 
         result.setTranslatedNotation(
                 "∃x " + predicateName + "(x)"
@@ -206,7 +222,7 @@ public class QuantifierRule extends TranslationRule {
 
         result.setExplanation(
                 "The statement expresses existential quantification. "
-                        + "It states that at least one element has "
+                        + "It states that at least one element satisfies "
                         + "the specified property."
         );
 
@@ -214,21 +230,38 @@ public class QuantifierRule extends TranslationRule {
     }
 
     /**
+     * Converts a phrase into a simple predicate-style name.
+     *
+     * Example:
+     * "student" → "Student"
+     * "studies" → "Studies"
+     * "prime number" → "PrimeNumber"
+     */
+    private String toPredicateName(String text) {
+        String[] words = text.split("\\s+");
+        StringBuilder result = new StringBuilder();
+
+        for (String word : words) {
+            if (word.isEmpty()) {
+                continue;
+            }
+
+            result.append(
+                    Character.toUpperCase(word.charAt(0))
+            );
+
+            if (word.length() > 1) {
+                result.append(word.substring(1));
+            }
+        }
+
+        return result.toString();
+    }
+
+    /**
      * Removes punctuation from the end of a statement.
      */
     private String removeTrailingPunctuation(String text) {
         return text.replaceAll("[.,!?]+$", "").trim();
-    }
-
-    /**
-     * Capitalizes the first letter of a predicate name.
-     */
-    private String capitalize(String text) {
-        if (text.isEmpty()) {
-            return text;
-        }
-
-        return Character.toUpperCase(text.charAt(0))
-                + text.substring(1);
     }
 }
