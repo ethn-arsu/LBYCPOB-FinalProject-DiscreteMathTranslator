@@ -88,6 +88,19 @@ public class TranslationResult {
     }
 
     /**
+     * Indicates whether this result represents a successful translation.
+     *
+     * <p>Useful for the view layer to distinguish a valid translation
+     * from a failed/unmatched one without manually null-checking
+     * {@link #getTranslatedNotation()}.</p>
+     *
+     * @return true if translated notation is present; false otherwise
+     */
+    public boolean isSuccessful() {
+        return translatedNotation != null && !translatedNotation.isEmpty();
+    }
+
+    /**
      * Returns a formatted, readable summary of this result,
      * useful for console output or quick debugging.
      *

@@ -26,21 +26,28 @@ public class TranslatorEngine {
     /**
      * The set of translation rules this engine can apply,
      * checked in order until a matching rule is found.
+     *
+     * <p>Order matters: more structurally specific rules
+     * (biconditional, conditional, quantifier, set) are checked
+     * before broad substring-based connector rules (conjunction,
+     * disjunction), since statements using those structures can
+     * also incidentally contain words like "and" or "or".</p>
      */
     private final List<TranslationRule> rules;
 
     /**
-     * Initializes the engine with all available translation rules.
+     * Initializes the engine with all available translation rules,
+     * ordered from most specific to most general.
      */
     public TranslatorEngine() {
         this.rules = new ArrayList<>();
-        rules.add(new BiconditionalRule());
+        rules.add(new BiconditionalRule()); // must precede ConditionalRule
         rules.add(new ConditionalRule());
-        rules.add(new ConjunctionRule());
-        rules.add(new DisjunctionRule());
+        rules.add(new QuantifierRule());    // structural — check before generic connectors
+        rules.add(new SetRule());           // structural — check before generic connectors
         rules.add(new NegationRule());
-        rules.add(new QuantifierRule());
-        rules.add(new SetRule());
+        rules.add(new ConjunctionRule());   // broad substring match — check last
+        rules.add(new DisjunctionRule());   // broad substring match — check last
     }
 
     /**
