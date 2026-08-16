@@ -9,7 +9,10 @@ import javafx.scene.control.TextField;
 import ph.edu.dlsu.lbycpob.discretemathtranslator.engine.TranslatorEngine;
 import ph.edu.dlsu.lbycpob.discretemathtranslator.model.Expression;
 import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
+import ph.edu.dlsu.lbycpob.discretemathtranslator.utils.InputValidator;
+
 import java.util.Map;
+
 /**
  * Acts as the bridge between the JavaFX view and the
  * translation engine.
@@ -38,7 +41,7 @@ public class MainController {
     private TextArea translationLabel;
 
     /**
-     * Text area displaying the explanation for the translation.
+     * Text area displaying the variable legend for the translation.
      */
     @FXML
     private TextArea legendLabel;
@@ -50,7 +53,7 @@ public class MainController {
     private TextArea explanationLabel;
 
     /**
-     * Label displaying the translation status
+     * Label displaying the translation status.
      */
     @FXML
     private Label statusLabel;
@@ -63,7 +66,7 @@ public class MainController {
     }
 
     /**
-     * Handles the translation button and an Enter key pressed within input field
+     * Handles the translation button and an Enter key pressed within input field.
      *
      * @param event the JavaFX action event
      */
@@ -72,64 +75,90 @@ public class MainController {
 
         String rawInput = inputField.getText();
 
-        //Input Validation
+        // Input Validation
         if (rawInput == null || rawInput.trim().isEmpty()) {
             statusLabel.setText("Please enter a valid input");
             statusLabel.getStyleClass().add("error-label");
 
             translationLabel.setText("");
+            legendLabel.clear();
             explanationLabel.setText("");
             return;
         }
 
         Expression expression = new Expression(rawInput);
 
-        TranslationResult translationResult = translatorEngine.translate(expression);
+        TranslationResult translationResult =
+                translatorEngine.translate(expression);
 
-        if(translationResult.isSuccessful()){
-            translationLabel.setText(translationResult.getTranslatedNotation());
+        if (translationResult.isSuccessful()) {
+            translationLabel.setText(
+                    translationResult.getTranslatedNotation()
+            );
+
             displayVariableLegend(translationResult);
-            explanationLabel.setText(translationResult.getExplanation());
+
+            explanationLabel.setText(
+                    translationResult.getExplanation()
+            );
 
             statusLabel.setText("Successfully translated");
             statusLabel.getStyleClass().add("success-label");
-        }
-        else {
-            translationLabel.setText("Cannot translate the given expression");
-            explanationLabel.setText(translationResult.getExplanation());
+
+        } else {
+            translationLabel.setText(
+                    "Cannot translate the given expression"
+            );
+
+            // Clear the previous translation's variable legend.
+            legendLabel.clear();
+
+            explanationLabel.setText(
+                    translationResult.getExplanation()
+            );
+
             statusLabel.setText("Failed translating");
             statusLabel.getStyleClass().add("error-label");
         }
     }
 
     /**
-     * Displays the variables and their meanings
+     * Displays the variables and their meanings.
      *
-     * ex: A or B
+     * <p>Example:
+     * A or B
      * will display:
      * p = A
      * q = B
+     * </p>
      *
      * @param translationResult the result containing the legends
      */
-    private void displayVariableLegend(TranslationResult translationResult) {
-        Map<String, String> legend = translationResult.getVariableLegend();
+    private void displayVariableLegend(
+            TranslationResult translationResult) {
+
+        Map<String, String> legend =
+                translationResult.getVariableLegend();
+
         if (legend == null || legend.isEmpty()) {
             legendLabel.setText("No variables found");
             return;
         }
+
         StringBuilder legendText = new StringBuilder();
+
         for (Map.Entry<String, String> entry : legend.entrySet()) {
             legendText.append(entry.getKey())
-            .append(" = ")
-            .append(entry.getValue())
-            .append("\n");
+                    .append(" = ")
+                    .append(entry.getValue())
+                    .append("\n");
         }
+
         legendLabel.setText(legendText.toString().trim());
     }
 
     /**
-     * Handles the clear button, clears all input and results
+     * Handles the clear button, clears all input and results.
      *
      * @param event the JavaFX action event
      */
@@ -151,5 +180,4 @@ public class MainController {
         Expression expression = new Expression(rawInput);
         return translatorEngine.translate(expression);
     }
-
 }
