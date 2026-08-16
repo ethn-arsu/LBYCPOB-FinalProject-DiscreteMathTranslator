@@ -112,7 +112,7 @@
             <Insets top="10" left="20" right="20" bottom="15"/>
         </padding>
 
-        <Label text="Arsua • Mauricio • Robes"/>
+        <Label text="LBYCPOB Final Project | Developed by Arsua, Mauricio, and Robes"/>
     </HBox>
 </bottom>
 
