@@ -166,6 +166,7 @@ public class MainController {
     private void handleClear(ActionEvent event) {
         inputField.clear();
         translationLabel.clear();
+        legendLabel.clear();
         explanationLabel.clear();
         statusLabel.setText("");
     }
