@@ -71,7 +71,7 @@
                 <VBox spacing="8">
                     <Label text="Translation"
                            styleClass="section-label"/>
-                    <TextArea fx:id="notationLabel"
+                    <TextArea fx:id="translationLabel"
                            text="Translation will appear here"
                            wrapText="true"
                            styleClass="notation-label"/>
