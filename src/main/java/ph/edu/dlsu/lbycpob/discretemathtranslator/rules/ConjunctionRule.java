@@ -7,15 +7,13 @@ import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
  * Handles conjunction statements and translates them into
  * propositional logic conjunction notation.
  *
- * <p>A conjunction represents two propositions that are both
- * connected by a logical AND.</p>
+ * <p>A conjunction connects two propositions using "and"
+ * and is represented by the symbol ∧.</p>
  *
- * <p>Supported patterns include:
- * <ul>
- *     <li>P and Q</li>
- *     <li>P as well as Q</li>
- *     <li>P but Q</li>
- * </ul>
+ * <p>Example:
+ * "Alice studies and Bob studies."
+ * becomes:
+ * p ∧ q</p>
  *
  */
 public class ConjunctionRule extends TranslationRule {

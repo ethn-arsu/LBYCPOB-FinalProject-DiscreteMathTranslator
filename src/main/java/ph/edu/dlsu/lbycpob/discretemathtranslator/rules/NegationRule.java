@@ -7,15 +7,14 @@ import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
  * Handles negation statements and translates them into
  * propositional logic negation notation.
  *
- * <p>A negation represents the logical denial of a proposition
- * and is represented using the symbol ¬.</p>
- *
  * <p>Supported patterns include:
  * <ul>
  *     <li>Not P</li>
- *     <li>P is not ...</li>
- *     <li>P does not ...</li>
- *     <li>P never ...</li>
+ *     <li>P is not Q</li>
+ *     <li>P are not Q</li>
+ *     <li>P does not Q</li>
+ *     <li>P do not Q</li>
+ *     <li>P never Q</li>
  * </ul>
  *
  */
