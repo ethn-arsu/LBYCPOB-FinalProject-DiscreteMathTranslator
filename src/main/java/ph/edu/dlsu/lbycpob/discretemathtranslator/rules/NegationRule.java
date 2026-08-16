@@ -32,11 +32,14 @@ public class NegationRule extends TranslationRule {
 
     @Override
     public boolean matches(Expression expression) {
-        if (expression == null || expression.getEnglishStatement() == null) {
+        if (expression == null
+                || expression.getEnglishStatement() == null) {
             return false;
         }
 
-        String input = expression.getEnglishStatement().trim().toLowerCase();
+        String input = expression.getEnglishStatement()
+                .trim()
+                .toLowerCase();
 
         return input.startsWith("not ")
                 || input.contains(" is not ")
@@ -58,6 +61,10 @@ public class NegationRule extends TranslationRule {
     public TranslationResult translate(Expression expression) {
         TranslationResult result = new TranslationResult();
 
+        if (!matches(expression)) {
+            return result;
+        }
+
         String input = expression.getEnglishStatement().trim();
         String lowerInput = input.toLowerCase();
 
@@ -71,36 +78,46 @@ public class NegationRule extends TranslationRule {
 
             int index = lowerInput.indexOf(" is not ");
 
-            proposition = input.substring(0, index).trim()
-                    + input.substring(index + 6).trim();
+            String subject = input.substring(0, index).trim();
+            String predicate = input.substring(index + 8).trim();
+
+            proposition = subject + " is " + predicate;
 
         } else if (lowerInput.contains(" are not ")) {
 
             int index = lowerInput.indexOf(" are not ");
 
-            proposition = input.substring(0, index).trim()
-                    + input.substring(index + 7).trim();
+            String subject = input.substring(0, index).trim();
+            String predicate = input.substring(index + 9).trim();
+
+            proposition = subject + " are " + predicate;
 
         } else if (lowerInput.contains(" does not ")) {
 
             int index = lowerInput.indexOf(" does not ");
 
-            proposition = input.substring(0, index).trim()
-                    + input.substring(index + 10).trim();
+            String subject = input.substring(0, index).trim();
+            String predicate = input.substring(index + 10).trim();
+
+            proposition = subject + " does " + predicate;
 
         } else if (lowerInput.contains(" do not ")) {
 
             int index = lowerInput.indexOf(" do not ");
 
-            proposition = input.substring(0, index).trim()
-                    + input.substring(index + 7).trim();
+            String subject = input.substring(0, index).trim();
+            String predicate = input.substring(index + 8).trim();
+
+            proposition = subject + " do " + predicate;
 
         } else if (lowerInput.contains(" never ")) {
 
             int index = lowerInput.indexOf(" never ");
 
-            proposition = input.substring(0, index).trim()
-                    + input.substring(index + 7).trim();
+            String subject = input.substring(0, index).trim();
+            String predicate = input.substring(index + 7).trim();
+
+            proposition = subject + " " + predicate;
 
         } else {
             return result;
@@ -112,8 +129,7 @@ public class NegationRule extends TranslationRule {
 
         result.setExplanation(
                 "The statement expresses a negation. "
-                        + "The proposition \"" + proposition
-                        + "\" is being denied."
+                        + "\"" + proposition + "\" is being denied."
         );
 
         return result;
