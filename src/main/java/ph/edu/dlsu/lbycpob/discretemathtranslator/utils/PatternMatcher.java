@@ -81,8 +81,8 @@ public class PatternMatcher {
 
         String normal = input.toLowerCase();
 
-        return normal.contains("or") ||
-                (normal.startsWith("either") && normal.contains("or")) ||
+        return normal.contains(" or ") ||
+                (normal.startsWith("either") && normal.contains(" or ")) ||
                 normal.contains("otherwise");
 
     }
@@ -100,9 +100,9 @@ public class PatternMatcher {
         }
         String normal = input.toLowerCase();
 
-        return normal.contains("not") || normal.contains("is not") ||
-                normal.contains("are not") || normal.contains("does not") ||
-                normal.contains("do not") || normal.contains("never");
+        return normal.contains(" not ") || normal.contains(" is not ") ||
+                normal.contains(" are not ") || normal.contains(" does not ") ||
+                normal.contains("do not") || normal.contains(" never ");
 
     }
 
@@ -119,10 +119,10 @@ public class PatternMatcher {
         }
         String normal = input.toLowerCase();
 
-        return normal.contains("every") ||
-                normal.contains("all") ||
-                normal.contains("some") ||
-                normal.contains("there exists");
+        return normal.contains("every ") ||
+                normal.contains("all ") ||
+                normal.contains("some ") ||
+                normal.contains("there exists ");
 
     }
 
@@ -139,8 +139,8 @@ public class PatternMatcher {
         }
         String normal = input.toLowerCase();
 
-        return normal.contains("union") ||
-                normal.contains("intersect") ||
+        return normal.contains(" union ") ||
+                normal.contains(" intersect") ||
                 normal.contains("subset of") ||
                 normal.contains("element of");
 
