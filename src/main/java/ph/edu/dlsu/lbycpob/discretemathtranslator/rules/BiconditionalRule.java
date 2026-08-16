@@ -65,8 +65,14 @@ public class BiconditionalRule extends TranslationRule {
                 connectorIndex + connector.length()
         ).trim();
 
-        result.setTranslatedNotation("p ↔ q");
+        leftSide = removeTrailingPunctuation(leftSide);
+        rightSide = removeTrailingPunctuation(rightSide);
 
+        if (leftSide.isEmpty() || rightSide.isEmpty()) {
+            return result;
+        }
+
+        result.setTranslatedNotation("p ↔ q");
         result.addLegendEntry("p", leftSide);
         result.addLegendEntry("q", rightSide);
 
@@ -78,5 +84,9 @@ public class BiconditionalRule extends TranslationRule {
         );
 
         return result;
+    }
+
+    private String removeTrailingPunctuation(String text) {
+        return text.replaceAll("[.,!?]+$", "").trim();
     }
 }
