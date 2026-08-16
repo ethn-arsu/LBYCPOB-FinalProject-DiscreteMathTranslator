@@ -36,10 +36,13 @@ public class ConditionalRule extends TranslationRule {
                 .trim()
                 .toLowerCase();
 
-        return input.startsWith("if ") // To prevent this from accidentally claiming a biconditional statement
-                && input.contains(" then ")
-                || input.startsWith("if ")
-                && input.contains(",")
+        // This prevents it from claiming the statement as biconditional
+        if (input.contains(" if and only if ")) {
+            return false;
+        }
+
+        return (input.startsWith("if ") && input.contains(" then "))
+                || (input.startsWith("if ") && input.contains(","))
                 || input.contains(" implies ");
     }
 
