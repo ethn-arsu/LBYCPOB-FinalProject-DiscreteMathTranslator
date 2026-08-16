@@ -24,6 +24,10 @@
             <padding>
                 <Insets top="25" right="35" left="35" bottom="20"/>
             </padding>
+            <Label text="Discrete Math Translator by Arsua, Aeon, Robes"
+                   styleClass="title-label"/>
+            <Label text="Translates English statements to discrete mathematical notations"
+                   styleClass="subtitle-label"/>
         </VBox>
     </top>
 
@@ -36,32 +40,56 @@
                 <padding>
                     <Insets top="5" right="35" left="35" bottom="25"/>
                 </padding>
+
+                <!-- Input Section -->
+                <VBox spacing="8">
+                    <Label text="English Message" styleClass="section-label"/>
+                    <TextField fx:id="inputField"
+                               promptText="Enter an English statement here"
+                               prefHeight="42"
+                               onAction="#handleTranslation"/>
+
+                    <HBox spacing="10">
+                        <Button fx:id="translateButton"
+                                text="Translate"
+                                prefWidth="120"
+                                onAction="#handleTranslation"/>
+
+                        <Button fx:id="clearButton"
+                                text="Clear"
+                                prefWidth="100"
+                                onAction="#handleClear"/>
+                    </HBox>
+                    <Label fx:id="statusLabel"
+                           text=""
+                           wrapText="true"/>
+                </VBox>
             </VBox>
         </ScrollPane>
     </center>
 
-    <!-- Input Section -->
+
+
+    <!--Results Display-->
     <VBox spacing="8">
-        <Label text="English Message" styleClass="section-label"/>
-        <TextField fx:id="inputField"
-                   promptText="Enter an English statement here"
-                   prefHeight="42"
-                   onAction="#handleTranslation"/>
-
-        <HBox spacing="10">
-            <Button fx:id="translateButton"
-                    text="Translate"
-                    prefWidth="120"
-                    onAction="#handleTranslation"/>
-
-            <Button fx:id="clearButton"
-                    text="Clear"
-                    prefWidth="100"
-                    onAction="#handleClear"/>
-        </HBox>
-        <Label fx:id="statusLabel"
-               text=""
-               wrapText="true"/>
+        <Label text="Translation"
+               styleClass="section-label"/>
+        <Label fx:id="notationLabel"
+               text="Translation will appear here"
+               wrapText="true"
+               styleClass="notation-label"/>
     </VBox>
 
+    <!--Explanation-->
+    <VBox spacing="8">
+        <Label text="Explanation"
+               styleClass="section-label"/>
+        <TextArea fx:id="explanationLabel"
+                  editable="false"
+                  wrapText="true"
+                  prefRowCount="5"
+                  promptText="An explanation of the translation appears here"
+                  styleClass="explanation-area"/>
+
+    </VBox>
 </BorderPane>
