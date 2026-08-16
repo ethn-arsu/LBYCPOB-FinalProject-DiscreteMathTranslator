@@ -24,7 +24,7 @@
             <padding>
                 <Insets top="25" right="35" left="35" bottom="20"/>
             </padding>
-            <Label text="Discrete Math Translator by Arsua, Aeon, Robes"
+            <Label text="Discrete Math Translator"
                    styleClass="title-label"/>
             <Label text="Translates English statements to discrete mathematical notations"
                    styleClass="subtitle-label"/>
@@ -64,11 +64,14 @@
                            text=""
                            wrapText="true"/>
                 </VBox>
+
+                <Separator/>
+
                 <!--Results Display-->
                 <VBox spacing="8">
                     <Label text="Translation"
                            styleClass="section-label"/>
-                    <Label fx:id="notationLabel"
+                    <TextArea fx:id="notationLabel"
                            text="Translation will appear here"
                            wrapText="true"
                            styleClass="notation-label"/>
@@ -86,10 +89,19 @@
                               styleClass="explanation-area"/>
 
                 </VBox>
+
             </VBox>
         </ScrollPane>
     </center>
+<bottom>
+    <HBox alignment="CENTER">
+        <padding>
+            <Insets top="10" left="20" right="20" bottom="15"/>
+        </padding>
 
+        <Label text="Arsua • Mauricio • Robes"/>
+    </HBox>
+</bottom>
 
 
 
