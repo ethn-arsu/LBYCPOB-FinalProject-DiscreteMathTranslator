@@ -32,7 +32,36 @@
         <ScrollPane fitToWidth="true"
                     hbarPolicy="NEVER"
                     style="-fx-background-color: transparent;">
+            <VBox spacing="18">
+                <padding>
+                    <Insets top="5" right="35" left="35" bottom="25"/>
+                </padding>
+            </VBox>
         </ScrollPane>
     </center>
+
+    <!-- Input Section -->
+    <VBox spacing="8">
+        <Label text="English Message" styleClass="section-label"/>
+        <TextField fx:id="inputField"
+                   promptText="Enter an English statement here"
+                   prefHeight="42"
+                   onAction="#handleTranslation"/>
+
+        <HBox spacing="10">
+            <Button fx:id="translateButton"
+                    text="Translate"
+                    prefWidth="120"
+                    onAction="#handleTranslation"/>
+
+            <Button fx:id="clearButton"
+                    text="Clear"
+                    prefWidth="100"
+                    onAction="#handleClear"/>
+        </HBox>
+        <Label fx:id="statusLabel"
+               text=""
+               wrapText="true"/>
+    </VBox>
 
 </BorderPane>
