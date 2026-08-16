@@ -9,8 +9,8 @@ import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
  *
  * <p>Supported patterns include:
  * <ul>
- *     <li>An union B</li>
- *     <li>An intersect B</li>
+ *     <li>A union B</li>
+ *     <li>A intersect B</li>
  *     <li>A is a subset of B</li>
  *     <li>x is an element of A</li>
  * </ul>
@@ -28,11 +28,14 @@ public class SetRule extends TranslationRule {
 
     @Override
     public boolean matches(Expression expression) {
-        if (expression == null || expression.getEnglishStatement() == null) {
+        if (expression == null
+                || expression.getEnglishStatement() == null) {
             return false;
         }
 
-        String input = expression.getEnglishStatement().trim().toLowerCase();
+        String input = expression.getEnglishStatement()
+                .trim()
+                .toLowerCase();
 
         return input.contains(" union ")
                 || input.contains(" intersect ")
@@ -52,51 +55,28 @@ public class SetRule extends TranslationRule {
     public TranslationResult translate(Expression expression) {
         TranslationResult result = new TranslationResult();
 
+        if (!matches(expression)) {
+            return result;
+        }
+
         String input = expression.getEnglishStatement().trim();
         String lowerInput = input.toLowerCase();
 
-        if (lowerInput.contains(" union ")) {
-
-            int index = lowerInput.indexOf(" union ");
-
-            String firstSet = input.substring(0, index).trim();
-            String secondSet = input.substring(index + 7).trim();
-
-            result.setTranslatedNotation("A ∪ B");
-
-            result.addLegendEntry("A", firstSet);
-            result.addLegendEntry("B", secondSet);
-
-            result.setExplanation(
-                    "The statement expresses the union of two sets. "
-                            + "The union combines the elements belonging "
-                            + "to either set."
-            );
-
-        } else if (lowerInput.contains(" intersect ")) {
-
-            int index = lowerInput.indexOf(" intersect ");
-
-            String firstSet = input.substring(0, index).trim();
-            String secondSet = input.substring(index + 10).trim();
-
-            result.setTranslatedNotation("A ∩ B");
-
-            result.addLegendEntry("A", firstSet);
-            result.addLegendEntry("B", secondSet);
-
-            result.setExplanation(
-                    "The statement expresses the intersection of two sets. "
-                            + "The intersection contains the elements "
-                            + "common to both sets."
-            );
-
-        } else if (lowerInput.contains(" subset of ")) {
+        if (lowerInput.contains(" subset of ")) {
 
             int index = lowerInput.indexOf(" subset of ");
 
             String firstSet = input.substring(0, index).trim();
-            String secondSet = input.substring(index + 11).trim();
+            String secondSet = input.substring(
+                    index + " subset of ".length()
+            ).trim();
+
+            firstSet = removeTrailingPunctuation(firstSet);
+            secondSet = removeTrailingPunctuation(secondSet);
+
+            if (firstSet.isEmpty() || secondSet.isEmpty()) {
+                return result;
+            }
 
             result.setTranslatedNotation("A ⊆ B");
 
@@ -105,8 +85,61 @@ public class SetRule extends TranslationRule {
 
             result.setExplanation(
                     "The statement expresses a subset relationship. "
-                            + "Every element of the first set is also "
-                            + "an element of the second set."
+                            + "Every element of A is also an element of B."
+            );
+
+        } else if (lowerInput.contains(" union ")) {
+
+            int index = lowerInput.indexOf(" union ");
+
+            String firstSet = input.substring(0, index).trim();
+            String secondSet = input.substring(
+                    index + " union ".length()
+            ).trim();
+
+            firstSet = removeTrailingPunctuation(firstSet);
+            secondSet = removeTrailingPunctuation(secondSet);
+
+            if (firstSet.isEmpty() || secondSet.isEmpty()) {
+                return result;
+            }
+
+            result.setTranslatedNotation("A ∪ B");
+
+            result.addLegendEntry("A", firstSet);
+            result.addLegendEntry("B", secondSet);
+
+            result.setExplanation(
+                    "The statement expresses the union of two sets. "
+                            + "The union contains elements belonging "
+                            + "to either set."
+            );
+
+        } else if (lowerInput.contains(" intersect ")) {
+
+            int index = lowerInput.indexOf(" intersect ");
+
+            String firstSet = input.substring(0, index).trim();
+            String secondSet = input.substring(
+                    index + " intersect ".length()
+            ).trim();
+
+            firstSet = removeTrailingPunctuation(firstSet);
+            secondSet = removeTrailingPunctuation(secondSet);
+
+            if (firstSet.isEmpty() || secondSet.isEmpty()) {
+                return result;
+            }
+
+            result.setTranslatedNotation("A ∩ B");
+
+            result.addLegendEntry("A", firstSet);
+            result.addLegendEntry("B", secondSet);
+
+            result.setExplanation(
+                    "The statement expresses the intersection of two sets. "
+                            + "The intersection contains elements common "
+                            + "to both sets."
             );
 
         } else if (lowerInput.contains(" element of ")) {
@@ -114,7 +147,16 @@ public class SetRule extends TranslationRule {
             int index = lowerInput.indexOf(" element of ");
 
             String element = input.substring(0, index).trim();
-            String set = input.substring(index + 12).trim();
+            String set = input.substring(
+                    index + " element of ".length()
+            ).trim();
+
+            element = removeTrailingPunctuation(element);
+            set = removeTrailingPunctuation(set);
+
+            if (element.isEmpty() || set.isEmpty()) {
+                return result;
+            }
 
             result.setTranslatedNotation("x ∈ A");
 
@@ -125,9 +167,15 @@ public class SetRule extends TranslationRule {
                     "The statement expresses set membership. "
                             + "The specified element belongs to the set."
             );
-
         }
 
         return result;
+    }
+
+    /**
+     * Removes punctuation from the end of a proposition.
+     */
+    private String removeTrailingPunctuation(String text) {
+        return text.replaceAll("[.,!?]+$", "").trim();
     }
 }
