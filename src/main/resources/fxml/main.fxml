@@ -70,7 +70,7 @@
                     <Label text="Translation"
                            styleClass="section-label"/>
                     <TextArea fx:id="translationLabel"
-                           text="Translation will appear here"
+                           promptText="Translation will appear here"
                            wrapText="true"
                            styleClass="notation-label"/>
                 </VBox>
