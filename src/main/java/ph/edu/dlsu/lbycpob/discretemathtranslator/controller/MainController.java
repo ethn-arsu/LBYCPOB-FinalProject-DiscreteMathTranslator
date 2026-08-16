@@ -43,7 +43,7 @@ public class MainController {
     private TextArea translationLabel;
 
     /**
-     * Text area displaying the variable legend for the translation.
+     * Text area displaying the variables and their meanings.
      */
     @FXML
     private TextArea legendLabel;
