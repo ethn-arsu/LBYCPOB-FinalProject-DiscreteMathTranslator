@@ -4,24 +4,23 @@ package ph.edu.dlsu.lbycpob.discretemathtranslator.utils;
  * Provides helper methods for identifying supported
  * discrete mathematics sentence patterns.
  *
- * <p>This class assists the translation engine by
- * detecting keywords and logical connectors
- * within the user's input.</p>
+ * <p>This class assists the application in detecting
+ * supported logical and mathematical sentence structures.</p>
  */
 public class PatternMatcher {
 
     /**
-     * Checks whether the input contains a conditional pattern.
+     * Checks whether the input contains a biconditional pattern.
      *
      * @param input the user's input
      * @return true if a biconditional pattern is detected
      */
     public boolean containsBiconditional(String input) {
-
         if (input == null) {
             return false;
         }
-        String normal = input.toLowerCase();
+
+        String normal = input.trim().toLowerCase();
 
         return normal.contains(" if and only if ");
     }
@@ -29,24 +28,26 @@ public class PatternMatcher {
     /**
      * Checks whether the input contains a conditional pattern.
      *
+     * <p>Biconditional statements are excluded because they
+     * are handled separately.</p>
+     *
      * @param input the user's input
-     * @return true if a conditional pattern is detected
+     * @return true if a supported conditional pattern is detected
      */
     public boolean containsConditional(String input) {
-
         if (input == null) {
             return false;
         }
-        String normal = input.toLowerCase();
 
-        // Biconditional, handled by containsBiconditional
-        if (normal.contains(" if and only if ")){
+        String normal = input.trim().toLowerCase();
+
+        if (containsBiconditional(normal)) {
             return false;
         }
 
-        return (normal.startsWith("if ") && normal.contains(" then ")) ||
-                normal.contains(" if ") || normal.contains(" whenever ") ||
-                normal.contains(" once ");
+        return (normal.startsWith("if ") && normal.contains(" then "))
+                || (normal.startsWith("if ") && normal.contains(","))
+                || normal.contains(" implies ");
     }
 
     /**
@@ -56,35 +57,29 @@ public class PatternMatcher {
      * @return true if a conjunction pattern is detected
      */
     public boolean containsConjunction(String input) {
-
         if (input == null) {
             return false;
         }
-        String normal = input.toLowerCase();
 
-        return normal.contains(" and ") ||
-                normal.contains("as well as") ||
-                normal.contains("but");
+        String normal = input.trim().toLowerCase();
+
+        return normal.contains(" and ");
     }
 
     /**
-     * Checks whether the input contains a negation pattern.
+     * Checks whether the input contains a disjunction pattern.
      *
      * @param input the user's input
-     * @return true if a negation pattern is detected
+     * @return true if a disjunction pattern is detected
      */
     public boolean containsDisjunction(String input) {
-
         if (input == null) {
             return false;
         }
 
-        String normal = input.toLowerCase();
+        String normal = input.trim().toLowerCase();
 
-        return normal.contains(" or ") ||
-                (normal.startsWith("either") && normal.contains(" or ")) ||
-                normal.contains("otherwise");
-
+        return normal.contains(" or ");
     }
 
     /**
@@ -94,55 +89,55 @@ public class PatternMatcher {
      * @return true if a negation pattern is detected
      */
     public boolean containsNegation(String input) {
-
         if (input == null) {
             return false;
         }
-        String normal = input.toLowerCase();
 
-        return normal.contains(" not ") || normal.contains(" is not ") ||
-                normal.contains(" are not ") || normal.contains(" does not ") ||
-                normal.contains("do not") || normal.contains(" never ");
+        String normal = input.trim().toLowerCase();
 
+        return normal.startsWith("not ")
+                || normal.contains(" is not ")
+                || normal.contains(" are not ")
+                || normal.contains(" does not ")
+                || normal.contains(" do not ")
+                || normal.contains(" never ");
     }
 
     /**
-     * Checks whether the input contains a negation pattern.
+     * Checks whether the input contains a quantifier pattern.
      *
      * @param input the user's input
-     * @return true if a negation pattern is detected
+     * @return true if a quantifier pattern is detected
      */
     public boolean containsQuantifier(String input) {
-
         if (input == null) {
             return false;
         }
-        String normal = input.toLowerCase();
 
-        return normal.contains("every ") ||
-                normal.contains("all ") ||
-                normal.contains("some ") ||
-                normal.contains("there exists ");
+        String normal = input.trim().toLowerCase();
 
+        return normal.startsWith("every ")
+                || normal.startsWith("all ")
+                || normal.startsWith("some ")
+                || normal.startsWith("there exists ");
     }
 
     /**
-     * Checks whether the input contains a negation pattern.
+     * Checks whether the input contains a set theory pattern.
      *
      * @param input the user's input
-     * @return true if a negation pattern is detected
+     * @return true if a set pattern is detected
      */
     public boolean containsSet(String input) {
-
         if (input == null) {
             return false;
         }
-        String normal = input.toLowerCase();
 
-        return normal.contains(" union ") ||
-                normal.contains(" intersect") ||
-                normal.contains("subset of") ||
-                normal.contains("element of");
+        String normal = input.trim().toLowerCase();
 
+        return normal.contains(" union ")
+                || normal.contains(" intersect ")
+                || normal.contains(" subset of ")
+                || normal.contains(" element of ");
     }
 }
