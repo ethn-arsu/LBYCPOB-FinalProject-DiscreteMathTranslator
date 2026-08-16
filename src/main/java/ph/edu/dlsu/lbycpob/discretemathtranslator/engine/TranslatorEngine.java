@@ -58,6 +58,20 @@ public class TranslatorEngine {
      */
     public TranslationResult translate(Expression expression) {
 
+        TranslationResult result = new TranslationResult();
+
+        if (expression == null
+                || expression.getEnglishStatement() == null
+                || expression.getEnglishStatement().trim().isEmpty()) {
+
+            result.setTranslatedNotation(null);
+            result.setExplanation(
+                    "Please enter a supported English statement."
+            );
+
+            return result;
+        }
+
         for (TranslationRule rule : rules) {
             if (rule.matches(expression)) {
                 return rule.translate(expression);
@@ -65,11 +79,12 @@ public class TranslatorEngine {
         }
 
         // No rule matched — return a result indicating failure to translate.
-        TranslationResult result = new TranslationResult();
         result.setTranslatedNotation(null);
-        result.setExplanation("No matching translation rule found for: \""
-                + expression.getEnglishStatement() + "\"");
+        result.setExplanation(
+                "No matching translation rule found for: \""
+                        + expression.getEnglishStatement() + "\""
+        );
+
         return result;
     }
-
 }

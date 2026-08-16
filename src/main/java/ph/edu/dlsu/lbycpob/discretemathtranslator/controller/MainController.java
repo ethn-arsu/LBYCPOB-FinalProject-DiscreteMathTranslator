@@ -117,7 +117,7 @@ public class MainController {
                     translationResult.getExplanation()
             );
 
-            setStatus("Failed translating", "error-label");
+            setStatus("Translation failed", "error-label");
         }
     }
 
