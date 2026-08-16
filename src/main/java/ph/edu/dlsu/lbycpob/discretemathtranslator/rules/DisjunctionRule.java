@@ -7,15 +7,13 @@ import ph.edu.dlsu.lbycpob.discretemathtranslator.model.TranslationResult;
  * Handles disjunction statements and translates them into
  * propositional logic disjunction notation.
  *
- * <p>A disjunction represents two propositions connected
- * by a logical OR.</p>
+ * <p>A disjunction connects two propositions using "or"
+ * and is represented by the symbol ∨.</p>
  *
- * <p>Supported patterns include:
- * <ul>
- *     <li>P or Q</li>
- *     <li>Either P or Q</li>
- *     <li>P otherwise Q</li>
- * </ul>
+ * <p>Example:
+ * "Alice studies or Bob studies."
+ * becomes:
+ * p ∨ q</p>
  *
  */
 public class DisjunctionRule extends TranslationRule {
@@ -31,16 +29,18 @@ public class DisjunctionRule extends TranslationRule {
 
     @Override
     public boolean matches(Expression expression) {
-        if (expression == null || expression.getEnglishStatement() == null) {
+        if (expression == null
+                || expression.getEnglishStatement() == null) {
             return false;
         }
 
-        String input = expression.getEnglishStatement().trim().toLowerCase();
+        String input = expression.getEnglishStatement()
+                .trim()
+                .toLowerCase();
 
-        return input.contains(" or ")
-                || (input.startsWith("either ") && input.contains(" or "))
-                || input.contains(" otherwise ");
+        return input.contains(" or ");
     }
+
 
     /**
      * Translates a supported disjunction statement into
@@ -54,46 +54,29 @@ public class DisjunctionRule extends TranslationRule {
     public TranslationResult translate(Expression expression) {
         TranslationResult result = new TranslationResult();
 
+        if (!matches(expression)) {
+            return result;
+        }
+
         String input = expression.getEnglishStatement().trim();
         String lowerInput = input.toLowerCase();
 
-        String leftSide;
-        String rightSide;
-        String connector;
+        String connector = " or ";
+        int connectorIndex = lowerInput.indexOf(connector);
 
-        if (lowerInput.startsWith("either ")
-                && lowerInput.contains(" or ")) {
+        if (connectorIndex == -1) {
+            return result;
+        }
 
-            connector = " or ";
+        String leftSide = input.substring(0, connectorIndex).trim();
+        String rightSide = input.substring(
+                connectorIndex + connector.length()
+        ).trim();
 
-            int orIndex = lowerInput.indexOf(connector);
+        leftSide = removeTrailingPunctuation(leftSide);
+        rightSide = removeTrailingPunctuation(rightSide);
 
-            leftSide = input.substring(7, orIndex).trim();
-            rightSide = input.substring(orIndex + connector.length()).trim();
-
-        } else if (lowerInput.contains(" otherwise ")) {
-
-            connector = " otherwise ";
-
-            int connectorIndex = lowerInput.indexOf(connector);
-
-            leftSide = input.substring(0, connectorIndex).trim();
-            rightSide = input.substring(
-                    connectorIndex + connector.length()
-            ).trim();
-
-        } else if (lowerInput.contains(" or ")) {
-
-            connector = " or ";
-
-            int connectorIndex = lowerInput.indexOf(connector);
-
-            leftSide = input.substring(0, connectorIndex).trim();
-            rightSide = input.substring(
-                    connectorIndex + connector.length()
-            ).trim();
-
-        } else {
+        if (leftSide.isEmpty() || rightSide.isEmpty()) {
             return result;
         }
 
@@ -105,9 +88,17 @@ public class DisjunctionRule extends TranslationRule {
         result.setExplanation(
                 "The statement expresses a disjunction. "
                         + "\"" + leftSide + "\" and "
-                        + "\"" + rightSide + "\" are connected by a logical OR."
+                        + "\"" + rightSide + "\" are connected by "
+                        + "disjunction (∨)."
         );
 
         return result;
+    }
+
+    /**
+     * Removes punctuation from the end of a proposition.
+     */
+    private String removeTrailingPunctuation(String text) {
+        return text.replaceAll("[.,!?]+$", "").trim();
     }
 }

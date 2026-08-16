@@ -29,15 +29,16 @@ public class ConjunctionRule extends TranslationRule {
 
     @Override
     public boolean matches(Expression expression) {
-        if (expression == null || expression.getEnglishStatement() == null) {
+        if (expression == null
+                || expression.getEnglishStatement() == null) {
             return false;
         }
 
-        String input = expression.getEnglishStatement().trim().toLowerCase();
+        String input = expression.getEnglishStatement()
+                .trim()
+                .toLowerCase();
 
-        return input.contains(" and ")
-                || input.contains(" as well as ")
-                || input.contains(" but ");
+        return input.contains(" and ");
     }
 
     /**
@@ -52,30 +53,31 @@ public class ConjunctionRule extends TranslationRule {
     public TranslationResult translate(Expression expression) {
         TranslationResult result = new TranslationResult();
 
-        String input = expression.getEnglishStatement().trim();
-        String lowerInput = input.toLowerCase();
-
-        String leftSide;
-        String rightSide;
-
-        String connector;
-
-        if (lowerInput.contains(" as well as ")) {
-            connector = " as well as ";
-        } else if (lowerInput.contains(" and ")) {
-            connector = " and ";
-        } else if (lowerInput.contains(" but ")) {
-            connector = " but ";
-        } else {
+        if (!matches(expression)) {
             return result;
         }
 
+        String input = expression.getEnglishStatement().trim();
+        String lowerInput = input.toLowerCase();
+
+        String connector = " and ";
         int connectorIndex = lowerInput.indexOf(connector);
 
-        leftSide = input.substring(0, connectorIndex).trim();
-        rightSide = input.substring(
+        if (connectorIndex == -1) {
+            return result;
+        }
+
+        String leftSide = input.substring(0, connectorIndex).trim();
+        String rightSide = input.substring(
                 connectorIndex + connector.length()
         ).trim();
+
+        leftSide = removeTrailingPunctuation(leftSide);
+        rightSide = removeTrailingPunctuation(rightSide);
+
+        if (leftSide.isEmpty() || rightSide.isEmpty()) {
+            return result;
+        }
 
         result.setTranslatedNotation("p ∧ q");
 
@@ -85,9 +87,17 @@ public class ConjunctionRule extends TranslationRule {
         result.setExplanation(
                 "The statement expresses a conjunction. "
                         + "\"" + leftSide + "\" and "
-                        + "\"" + rightSide + "\" are connected by a logical AND."
+                        + "\"" + rightSide + "\" are connected by "
+                        + "conjunction (∧)."
         );
 
         return result;
+    }
+
+    /**
+     * Removes punctuation from the end of a proposition.
+     */
+    private String removeTrailingPunctuation(String text) {
+        return text.replaceAll("[.,!?]+$", "").trim();
     }
 }
