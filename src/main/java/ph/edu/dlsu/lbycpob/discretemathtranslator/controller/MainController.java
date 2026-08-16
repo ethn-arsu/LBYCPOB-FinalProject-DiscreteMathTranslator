@@ -41,6 +41,12 @@ public class MainController {
      * Text area displaying the explanation for the translation.
      */
     @FXML
+    private TextArea legendLabel;
+
+    /**
+     * Text area displaying the explanation for the translation.
+     */
+    @FXML
     private TextArea explanationLabel;
 
     /**
@@ -82,6 +88,7 @@ public class MainController {
 
         if(translationResult.isSuccessful()){
             translationLabel.setText(translationResult.getTranslatedNotation());
+            displayVariableLegend(translationResult);
             explanationLabel.setText(translationResult.getExplanation());
 
             statusLabel.setText("Successfully translated");
@@ -93,6 +100,32 @@ public class MainController {
             statusLabel.setText("Failed translating");
             statusLabel.getStyleClass().add("error-label");
         }
+    }
+
+    /**
+     * Displays the variables and their meanings
+     *
+     * ex: A or B
+     * will display:
+     * p = A
+     * q = B
+     *
+     * @param translationResult the result containing the legends
+     */
+    private void displayVariableLegend(TranslationResult translationResult) {
+        Map<String, String> legend = translationResult.getVariableLegend();
+        if (legend == null || legend.isEmpty()) {
+            legendLabel.setText("No variables found");
+            return;
+        }
+        StringBuilder legendText = new StringBuilder();
+        for (Map.Entry<String, String> entry : legend.entrySet()) {
+            legendText.append(entry.getKey())
+            .append(" = ")
+            .append(entry.getValue())
+            .append("\n");
+        }
+        legendLabel.setText(legendText.toString().trim());
     }
 
     /**

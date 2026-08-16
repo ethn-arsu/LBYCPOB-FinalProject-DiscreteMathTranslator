@@ -70,9 +70,24 @@
                     <Label text="Translation"
                            styleClass="section-label"/>
                     <TextArea fx:id="translationLabel"
-                           promptText="Translation will appear here"
-                           wrapText="true"
-                           styleClass="notation-label"/>
+                              editable="false"
+                              promptText="Translation will appear here"
+                              wrapText="true"
+                              styleClass="notation-label"/>
+                </VBox>
+
+                <!--Variable Explanation (p, q, etc.) -->
+                <VBox spacing="8.0">
+
+                    <Label text="Variable Legend"
+                           styleClass="section-label"/>
+
+                    <TextArea fx:id="legendLabel"
+                              editable="false"
+                              wrapText="true"
+                              prefRowCount="5"
+                              promptText="Variables and their meanings will appear here."
+                              styleClass="legend-area"/>
                 </VBox>
 
                 <!--Explanation-->
